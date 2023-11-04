@@ -37,10 +37,7 @@
 
     public virtual void display()
     {
-        Console.WriteLine("Id vehicle is: " + idvehicle);
-        Console.WriteLine("Vehicle brand is: " + brand);
-        Console.WriteLine("Rent Cost: " + RentCost());
-
+        Console.WriteLine($"{idvehicle, -10} {brand, -15} {traveldistance, -20} {daybuy.ToString("dd/MM/yyyy"), -15} {insurance}");
     }
 
 }

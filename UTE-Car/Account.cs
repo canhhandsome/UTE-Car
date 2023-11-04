@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 class Account
 {
     protected string id;
-    private string fullname;
-    private string address;
-    private string phone;
+    protected string fullname;
+    protected string address;
+    protected string phone;
     protected string username;
     protected string password;
 
@@ -20,7 +20,7 @@ class Account
         this.phone = phone;
     }
 
-    public virtual void Register()
+    public virtual void Register(string table)
     {
 
         string connectionString = "Server=LAPTOP-Q3MNC1CJ;Database=TestDatabase;Trusted_Connection=true";
@@ -32,7 +32,7 @@ class Account
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Information (UsernameL, PasswordL) VALUES (@username, @password)", connection))
+            using (SqlCommand command = new SqlCommand($"INSERT INTO dbo.{table} (UsernameL, PasswordL) VALUES (@username, @password)", connection))
             {
                 command.Parameters.AddWithValue("@username", this.username);
                 command.Parameters.AddWithValue("@password", this.password);
@@ -43,25 +43,31 @@ class Account
         Console.WriteLine("Register Success!!!");
     }
 
-    public virtual void Login()
+    public virtual Boolean Login(string table)
     {
         Console.Write("Enter your Username: ");
         this.username = Console.ReadLine();
         Console.Write("Enter your Password: ");
         this.password = Console.ReadLine();
-        checkLogin();
+        if(CheckAccount(table))
+        {
+            Console.WriteLine("Login Success!!!");
+            return true;
+        }
+        Console.WriteLine("Wrong Username or Password!!");
+        return false;
     }
 
 
 
-    public Boolean CheckAccount()
+    public Boolean CheckAccount(string table)
     {
         string connectionString = "Server=LAPTOP-Q3MNC1CJ;Database=TestDatabase;Trusted_Connection=true";
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand("SELECT * FROM Information WHERE UsernameL = @username AND PasswordL = @password", connection))
+            using (SqlCommand command = new SqlCommand($"SELECT * FROM {table} WHERE UsernameL = @username AND PasswordL = @password", connection))
             {
                 command.Parameters.AddWithValue("@username", this.username);
                 command.Parameters.AddWithValue("@password", this.password);
@@ -79,15 +85,6 @@ class Account
         return false; // No matching account found
     }
 
-    public void checkLogin()
-    {
-        if (CheckAccount())
-        {
-            Console.WriteLine("Login Success");
-        }
-        else
-            Console.WriteLine("Wrong Username or Password");
-    }
 
     public virtual void Display()
     {
@@ -96,6 +93,13 @@ class Account
         Console.WriteLine("Address: " + address);
         Console.WriteLine("Phone number: " + phone);
     }
+
+
+    public virtual void Menu()
+    {
+        
+    }
+
 
     ~Account() {  }
 }
