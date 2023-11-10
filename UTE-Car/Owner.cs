@@ -20,21 +20,36 @@
         }
     }
 
+    public override void LoginPage()
+    {
+        Console.Title = "Login";
+        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.ForegroundColor = ConsoleColor.Black;
+        string choice = "";
+    Login:
+        Owner o = new Owner();
+        Console.WriteLine("Hello!");
+        Console.WriteLine("PLease Login!!");
+
+            if (!o.Login("dbo.Customer"))
+            {
+                Console.ReadKey();
+                Console.Clear();
+                goto Login;
+            }
+            else
+            {
+                o.GetInfor("dbo.Owner");
+                o.Menu();
+            }
+    }
+
     public override void Menu()
     {
         Console.Title = "Owner";
         Console.BackgroundColor = ConsoleColor.Cyan;
         Console.ForegroundColor = ConsoleColor.Black;
         string choice = "";
-    Login:
-        Console.WriteLine("Hello!\nPlease login!");
-        if (!Login("dbo.Information"))
-        {
-            Console.ReadKey();
-            Console.Clear();
-            goto Login;
-        }
-
 
         while (true)
         {

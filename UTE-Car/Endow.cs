@@ -10,7 +10,7 @@
         this.percent = percent;
     }
 
-    public double Percent()
+    public static double Percent(double percent)
     {
         if (percent < 0)
         {
@@ -18,8 +18,8 @@
             return 1 - percent / 100;
         }
         else
-            return 1 + percent / 100; 
+            return 1 + percent / 100;
     }
 
-    ~Endow() { }    
+    ~Endow() { }
 }

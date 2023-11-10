@@ -40,4 +40,8 @@
         Console.WriteLine($"{idvehicle, -10} {brand, -15} {traveldistance, -20} {daybuy.ToString("dd/MM/yyyy"), -15} {insurance}");
     }
 
+    public virtual void GetInfor()
+    {
+
+    }
 }

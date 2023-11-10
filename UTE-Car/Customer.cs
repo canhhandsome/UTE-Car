@@ -1,4 +1,6 @@
-﻿class Customer : Account
+﻿using System.Data.SqlClient;
+
+class Customer : Account
 { 
     public Customer() { }
 
@@ -17,13 +19,14 @@
         base.Display();
     }
 
-    public override void Menu()
+    public override void LoginPage()
     {
-        Console.Title = "Customer";
+        Console.Title = "Login";
         Console.BackgroundColor = ConsoleColor.Cyan;
         Console.ForegroundColor = ConsoleColor.Black;
         string choice = "";
     Login:
+        Customer c = new Customer();
         Console.WriteLine("Hello!");
         Console.WriteLine("1. Login");
         Console.WriteLine("2. Register");
@@ -32,18 +35,31 @@
 
         if (choice == "1")
         {
-            if (!Login("dbo.Information"))
+            if (!c.Login("dbo.Customer"))
             {
                 Console.ReadKey();
                 Console.Clear();
                 goto Login;
             }
+            else
+            {
+                c.GetInfor("dbo.Customer");
+                c.Menu();
+            }
         }
         else if (choice == "2")
         {
-            Register("dbo.Information");
+            c.Register("dbo.Customer");
         }
+    }
 
+
+    public override void Menu()
+    {
+        Console.Title = "Customer";
+        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.ForegroundColor = ConsoleColor.Black;
+        string choice = "";
 
         while (true)
         {

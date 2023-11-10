@@ -29,7 +29,7 @@ while (true)
         case "1":
             Console.Clear();
             Console.WriteLine("You are Customer");
-            customer.Menu();
+            customer.LoginPage();
             // Add your code for Option 1 here
             break;
         case "2":
