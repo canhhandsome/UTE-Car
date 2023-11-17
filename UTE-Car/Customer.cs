@@ -11,8 +11,22 @@ class Customer : Account
 
     public void RentCar()
     {
-        
+
     }
+
+    // Methods
+    /* 
+    public virtual void Register(string table);
+    public virtual Boolean Login(string table);
+    public virtual void GetInfor(string table)
+    public Boolean CheckAccount(string table)
+    public virtual void Display()
+    public virtual void LoginPage()
+    public virtual void Menu()
+
+
+     */
+    // Methods
 
     public override void Display()
     {
@@ -35,7 +49,7 @@ class Customer : Account
 
         if (choice == "1")
         {
-            if (!c.Login("dbo.Customer"))
+            if (!c.Login("Customer"))
             {
                 Console.ReadKey();
                 Console.Clear();
@@ -43,13 +57,13 @@ class Customer : Account
             }
             else
             {
-                c.GetInfor("dbo.Customer");
+                c.GetInfor("Customer");
                 c.Menu();
             }
         }
         else if (choice == "2")
         {
-            c.Register("dbo.Customer");
+            c.Register("Customer");
         }
     }
 

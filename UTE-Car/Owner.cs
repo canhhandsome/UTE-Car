@@ -1,22 +1,42 @@
 ﻿class Owner : Account
 {
-    private Vehicle[] vehicle = { };
+    private List<Vehicle> vehicle = new List<Vehicle>();
     public Owner() { }
 
-    public Owner(string id, string fullname, string address, string phone, Vehicle[] vehicle) : base(id, fullname, address, phone) 
+    public Owner(string id, string fullname, string address, string phone, List<Vehicle> vehicle) : base(id, fullname, address, phone)
     {
         this.vehicle = vehicle;
     }
+
+    public string Id
+    { 
+        get 
+        { return id; } 
+    }
+
+    public List<Vehicle> VehicleList
+    { get { return vehicle; } }
+
+    // Methods
+    /* 
+    public virtual void GetInfor(string table);
+    public virtual void Display();
+    public virtual void LoginPage();
+    public virtual void Menu();
+
+
+     */
+    // Methods
 
 
     public override void Display()
     {
         base.Display();
         Console.WriteLine("Here is your vehicles:");
-        Console.WriteLine($"{"ID Car", -10} {"Brand", -15} {"Travel Distance", -20} {"Day buy", -15} {"Insurance"}");
+        Console.WriteLine($"{"ID Car",-10} {"Brand",-25} {"Travel Distance",-20} {"Day buy",-15} {"Insurance", -15} {"Rent Cost"}");
         foreach (var v in vehicle)
         {
-            v.display();
+            v.display();    
         }
     }
 
@@ -31,18 +51,30 @@
         Console.WriteLine("Hello!");
         Console.WriteLine("PLease Login!!");
 
-            if (!o.Login("dbo.Customer"))
-            {
-                Console.ReadKey();
-                Console.Clear();
-                goto Login;
-            }
-            else
-            {
-                o.GetInfor("dbo.Owner");
-                o.Menu();
-            }
+        if (!o.Login("Owner"))
+        {
+            Console.ReadKey();
+            Console.Clear();
+            goto Login;
+        }
+        else
+        {
+            o.GetInfor("Owner");
+            Console.ReadKey();
+            o.Menu();
+        }
     }
+
+    public override void GetInfor(string table)
+    {
+        base.GetInfor(table);
+        if(!Vehicle.GetInfor(this))
+        {
+            Console.WriteLine("Can't Read Data for Vehicles");
+
+        }
+    }
+
 
     public override void Menu()
     {

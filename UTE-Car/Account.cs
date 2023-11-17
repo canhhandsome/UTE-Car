@@ -20,6 +20,19 @@ class Account
         this.phone = phone;
     }
 
+    // Methods
+    /* 
+    public virtual void Register(string table);
+    public virtual Boolean Login(string table);
+    public virtual void GetInfor(string table)
+    public Boolean CheckAccount(string table)
+    public virtual void Display()
+    public virtual void LoginPage()
+    public virtual void Menu()
+
+
+     */
+    // Methods
     public virtual void Register(string table)
     {
 
@@ -40,7 +53,8 @@ class Account
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand($"INSERT INTO {table} (idcustomer, fullname, address, phone, username, password) VALUES (@id, @fullname, @address, @phone, @username, @password)", connection))
+            string idcolumn = "id" + table;
+            using (SqlCommand command = new SqlCommand($"INSERT INTO dbo.{table} ({idcolumn}, fullname, address, phone, username, password) VALUES (@id, @fullname, @address, @phone, @username, @password)", connection))
             {
                 command.Parameters.AddWithValue("@id", this.id);
                 command.Parameters.AddWithValue("@fullname", this.fullname);
@@ -61,7 +75,7 @@ class Account
         this.username = Console.ReadLine();
         Console.Write("Enter your Password: ");
         this.password = Console.ReadLine();
-        if(CheckAccount(table))
+        if (CheckAccount(table))
         {
             Console.WriteLine("Login Success!!!");
             return true;
@@ -77,7 +91,8 @@ class Account
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand($"SELECT idcustomer, fullname, address, phone FROM {table} WHERE username = @username", connection))
+            string idcolumn = "id" + table;
+            using (SqlCommand command = new SqlCommand($"SELECT {idcolumn}, fullname, address, phone FROM dbo.{table} WHERE username = @username", connection))
             {
                 command.Parameters.AddWithValue("@username", this.username);
 
@@ -85,7 +100,7 @@ class Account
                 {
                     while (reader.Read())
                     {
-                        id = reader["idcustomer"].ToString();
+                        id = reader[idcolumn].ToString();
                         fullname = reader["fullname"].ToString();
                         address = reader["address"].ToString();
                         phone = reader["phone"].ToString();
@@ -95,10 +110,6 @@ class Account
         }
     }
 
-    public virtual void LoginPage()
-    {
-
-    }
 
 
 
@@ -109,7 +120,7 @@ class Account
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand($"SELECT username, password FROM {table} WHERE username = @username AND password = @password", connection))
+            using (SqlCommand command = new SqlCommand($"SELECT username, password FROM dbo.{table} WHERE username = @username AND password = @password", connection))
             {
                 command.Parameters.AddWithValue("@username", this.username);
                 command.Parameters.AddWithValue("@password", this.password);
@@ -136,12 +147,17 @@ class Account
         Console.WriteLine("Phone number: " + phone);
     }
 
-
-    public virtual void Menu()
+    public virtual void LoginPage()
     {
-        
+
     }
 
 
-    ~Account() {  }
+    public virtual void Menu()
+    {
+
+    }
+
+
+    ~Account() { }
 }
