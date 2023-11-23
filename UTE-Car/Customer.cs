@@ -2,6 +2,7 @@
 
 class Customer : Account
 { 
+    private List<Vehicle> vehiclerent = new List<Vehicle>();
     public Customer() { }
 
     public Customer(string id,  string fullname, string address, string phone) : base(id, fullname, address, phone) 
@@ -14,15 +15,18 @@ class Customer : Account
 
     }
 
+    
+
     // Methods
     /* 
-    public virtual void Register(string table);
-    public virtual Boolean Login(string table);
-    public virtual void GetInfor(string table)
-    public Boolean CheckAccount(string table)
-    public virtual void Display()
-    public virtual void LoginPage()
-    public virtual void Menu()
+    public override void Register(string table);
+    public override Boolean Login(string table);
+    public override void GetInfor(string table);
+    public void RentCar();
+    public Boolean CheckAccount(string table);
+    public override void Display();
+    public override void LoginPage();
+    public override void Menu();
 
 
      */
@@ -33,14 +37,13 @@ class Customer : Account
         base.Display();
     }
 
-    public override void LoginPage()
+    public override bool LoginPage()
     {
         Console.Title = "Login";
         Console.BackgroundColor = ConsoleColor.Cyan;
         Console.ForegroundColor = ConsoleColor.Black;
         string choice = "";
     Login:
-        Customer c = new Customer();
         Console.WriteLine("Hello!");
         Console.WriteLine("1. Login");
         Console.WriteLine("2. Register");
@@ -49,7 +52,7 @@ class Customer : Account
 
         if (choice == "1")
         {
-            if (!c.Login("Customer"))
+            if (!Login("Customer"))
             {
                 Console.ReadKey();
                 Console.Clear();
@@ -57,14 +60,16 @@ class Customer : Account
             }
             else
             {
-                c.GetInfor("Customer");
-                c.Menu();
+                GetInfor("Customer");
+                return true;
             }
         }
         else if (choice == "2")
         {
-            c.Register("Customer");
+            Register("Customer");
+            return true;
         }
+        return false;
     }
 
 
@@ -83,7 +88,6 @@ class Customer : Account
             Console.Clear();
             Console.WriteLine($"Hello, {fullname}");
             Console.WriteLine("===================================");
-            Console.WriteLine("Who are you?");
             Console.WriteLine("1. Show All Vehicle");
             Console.WriteLine("2. Find Vehicle");
             Console.WriteLine("3. Show your contracts");

@@ -9,6 +9,7 @@
     private DateTime datereturn;
     private int numberdayrent;
 
+
     public Contract() { }
     public Contract(string idcontract, Customer customer, Vehicle vehicle, double downpayment, DateTime daterent, DateTime datereturn, int numberdayrent, double promotion)
     {
@@ -21,6 +22,21 @@
         this.numberdayrent = numberdayrent;
         this.promotion = promotion;
     }
+
+
+    //Methods
+    /*
+    
+    public int NumberDaysRent()
+    public double MoneyPay()
+    public double Fine()
+    
+    public void GetInfor();
+    
+    public void Display()
+     */
+    //Methods
+
 
     public int NumberDaysRent()
     {
@@ -41,7 +57,7 @@
     }
     
     
-    public void display()
+    public void Display()
     {
         Console.WriteLine("ID of Contract: " + idcontract);
         customer.Display();

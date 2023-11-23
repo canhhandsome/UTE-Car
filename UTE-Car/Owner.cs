@@ -40,18 +40,17 @@
         }
     }
 
-    public override void LoginPage()
+    public override bool LoginPage()
     {
         Console.Title = "Login";
         Console.BackgroundColor = ConsoleColor.Cyan;
         Console.ForegroundColor = ConsoleColor.Black;
         string choice = "";
     Login:
-        Owner o = new Owner();
         Console.WriteLine("Hello!");
         Console.WriteLine("PLease Login!!");
 
-        if (!o.Login("Owner"))
+        if (!Login("Owner"))
         {
             Console.ReadKey();
             Console.Clear();
@@ -59,9 +58,9 @@
         }
         else
         {
-            o.GetInfor("Owner");
+            GetInfor("Owner");
             Console.ReadKey();
-            o.Menu();
+            return true;
         }
     }
 

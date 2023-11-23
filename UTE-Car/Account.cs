@@ -20,6 +20,11 @@ class Account
         this.phone = phone;
     }
 
+    public virtual string Fullname
+    {
+        get { return fullname; }
+    }
+
     // Methods
     /* 
     public virtual void Register(string table);
@@ -147,9 +152,10 @@ class Account
         Console.WriteLine("Phone number: " + phone);
     }
 
-    public virtual void LoginPage()
+    public virtual bool LoginPage()
     {
 
+        return true;
     }
 
 

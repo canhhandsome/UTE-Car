@@ -17,6 +17,7 @@ class Vehicle
     protected double level = 1;
     protected double fee;
     protected double basecost = 1;
+    protected bool isRent;
 
     public Vehicle() { }
 
