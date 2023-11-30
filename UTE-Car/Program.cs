@@ -11,6 +11,5 @@ class Program
     {
         CompanyManagement companyManagement = new CompanyManagement();
         companyManagement.MenuLogin();
-        
     }
 }

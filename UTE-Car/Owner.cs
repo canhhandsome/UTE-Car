@@ -8,32 +8,14 @@
         this.vehicle = vehicle;
     }
 
-    public string Id
-    { 
-        get 
-        { return id; } 
-    }
-
     public List<Vehicle> VehicleList
     { get { return vehicle; } }
-
-    // Methods
-    /* 
-    public virtual void GetInfor(string table);
-    public virtual void Display();
-    public virtual void LoginPage();
-    public virtual void Menu();
-
-
-     */
-    // Methods
-
 
     public override void Display()
     {
         base.Display();
-        Console.WriteLine("Here is your vehicles:");
-        Console.WriteLine($"{"ID Car",-10} {"Brand",-25} {"Travel Distance",-20} {"Day buy",-15} {"Insurance", -15} {"Rent Cost"}");
+        Console.WriteLine("Here is vehicles:");
+        Console.WriteLine($"{"ID",-5} | {"Brand",-22} | {"TravelDistance",-15} | {"DayBuy",-12} | {"Insurance",-12} | {"RentCost",-12} | {"IsRent"} |");
         foreach (var v in vehicle)
         {
             v.display();    

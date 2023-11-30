@@ -20,9 +20,29 @@ class Account
         this.phone = phone;
     }
 
+
+    public virtual string Id
+    {
+        get { return id; }
+        set { id = value; }
+    }
+
     public virtual string Fullname
     {
         get { return fullname; }
+        set { fullname = value; }
+    }
+
+    public virtual string Address
+    {
+        get { return address; }
+        set { address = value; }
+    }
+
+    public virtual string Phone
+    {
+        get { return phone; }
+        set { phone = value; }
     }
 
     // Methods
@@ -45,6 +65,8 @@ class Account
 
         Console.Write("Enter your Username: ");
         this.username = Console.ReadLine();
+        Console.Write("Enter your Password: ");
+        this.password = Console.ReadLine();
         Console.Write("Enter your id: ");
         this.id = Console.ReadLine();
         Console.Write("Enter your fullname: ");
@@ -53,8 +75,6 @@ class Account
         this.address = Console.ReadLine();
         Console.Write("Enter your phone number");
         this.phone = Console.ReadLine();
-        Console.Write("Enter your Password: ");
-        this.password = Console.ReadLine();
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
@@ -70,7 +90,6 @@ class Account
                 command.ExecuteNonQuery();
             }
         }
-
         Console.WriteLine("Register Success!!!");
     }
 

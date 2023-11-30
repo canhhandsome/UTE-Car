@@ -36,6 +36,16 @@ class Vehicle
         set { idvehicle = value; }
     }
 
+    public virtual string Brand
+    {
+        get{ return brand; }
+    }
+
+    public virtual bool IsRented
+    {
+        get { return isRent; } 
+    }
+
     public virtual double RentCost()
     {
         if (this.insurance)
@@ -52,7 +62,7 @@ class Vehicle
     public virtual void display()
     {
 
-        Console.WriteLine($"{idvehicle,-10} {brand,-25} {traveldistance,-20} {daybuy.ToString("dd/MM/yyyy"),-15} {insurance, -15} {RentCost()}");
+        Console.WriteLine($"{idvehicle,-5} | {brand,-22} | {traveldistance,-15} | {daybuy.ToString("dd/MM/yyyy"),-12} | {insurance,-12} | {RentCost().ToString("0.00"),-12} | {isRent} |");
     }
 
     public static string GetType(string type)
@@ -76,6 +86,26 @@ class Vehicle
         }
     }
 
+    public void setIsRent(bool rent)
+    {
+        string connectionString = "Server=LAPTOP-Q3MNC1CJ;Database=UTE_Car;Trusted_Connection=true";
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            int tmp = rent ? 1 : 0;
+            string updateQuery = $"UPDATE dbo.Vehicle SET IsRent = {tmp} WHERE idvehicle = @idvehicle";
+
+            using (SqlCommand command = new SqlCommand(updateQuery, connection))
+            {
+                command.Parameters.AddWithValue("@idvehicle", idvehicle);
+                isRent = rent;
+                int rowsAffected = command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
     public static bool GetInfor(Owner owner)
     {
         string connectionString = "Server=LAPTOP-Q3MNC1CJ;Database=UTE_Car;Trusted_Connection=true";
@@ -85,7 +115,7 @@ class Vehicle
             try
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"SELECT V.idvehicle, brand, daybuy, traveldistance, insurance, V.idowner, typeVehicle\r\nFROM dbo.Vehicle V\r\nWHERE V.idowner = @idowner", connection))
+                using (SqlCommand command = new SqlCommand($"SELECT distinct V.idvehicle, brand, daybuy, traveldistance, insurance, V.idowner, typeVehicle, isRent \r\nFROM dbo.Vehicle V\r\nWHERE V.idowner = @idowner", connection))
                 {
                     command.Parameters.AddWithValue("@idowner", owner.Id);
 
@@ -101,7 +131,7 @@ class Vehicle
 
                             if (instance is Vehicle v)
                             {
-                                v.idvehicle = reader["idvehicle"].ToString();
+                                v.idvehicle = reader["idvehicle"].ToString().Trim();
                                 v.brand = reader["brand"].ToString().Trim();
                                 if (DateTime.TryParse(reader["daybuy"].ToString(), out DateTime date))
                                 {
@@ -116,6 +146,10 @@ class Vehicle
                                 if (bool.TryParse(reader["insurance"].ToString(), out bool ins))
                                 {
                                     v.insurance = ins;
+                                }
+                                if (bool.TryParse(reader["isRent"].ToString(), out bool isR))
+                                {
+                                    v.isRent = isR;
                                 }
                                 owner.VehicleList.Add(v);
                             }
