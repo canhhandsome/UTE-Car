@@ -14,6 +14,7 @@ class Account
     protected string username1;
     protected string password1;
     protected string password2;
+    protected  string email3;
 
 
     public Account() { }
