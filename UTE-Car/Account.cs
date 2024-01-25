@@ -9,14 +9,12 @@ class Account
     protected string phone;
     protected string username;
     protected string password;
-<<<<<<< HEAD
     protected string email;
     protected string phone2;
     protected string username1;
     protected string password1;
-=======
     protected string password2;
->>>>>>> TuanWoox
+
 
     public Account() { }
 
