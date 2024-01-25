@@ -9,6 +9,8 @@ class Account
     protected string phone;
     protected string username;
     protected string password;
+    protected string username1;
+    protected string password1;
 
     public Account() { }
 
