@@ -2,11 +2,6 @@
 using System.Net;
 using System.Numerics;
 
-enum EType
-{
-    car,
-    motobike
-}
 class Vehicle
 {
     protected string idvehicle;
@@ -17,17 +12,23 @@ class Vehicle
     protected double level = 1;
     protected double fee;
     protected double basecost = 1;
-    protected bool isRent;
+    protected bool isRent = false;
+    protected List<Rating> rating = new List<Rating>();
 
-    public Vehicle() { }
+    public Vehicle() 
+    {
+        rating = new List<Rating>();    
+    }
 
-    public Vehicle(string idvehicle, string brand, DateTime daybuy, int traveldistance, bool insurance)
+    public Vehicle(string idvehicle, string brand, DateTime daybuy, int traveldistance, bool insurance, List<Rating> rating)
     {
         this.idvehicle = idvehicle;
         this.brand = brand;
         this.daybuy = daybuy;
         this.traveldistance = traveldistance;
         this.insurance = insurance;
+        this.rating = rating;
+
     }
 
     public virtual string Idvehicle
@@ -38,27 +39,48 @@ class Vehicle
 
     public virtual string Brand
     {
-        get{ return brand; }
+        get { return brand; }
     }
 
     public virtual bool IsRented
     {
-        get { return isRent; } 
+        get { return isRent; }
     }
 
-    public virtual double RentCost()
+    public DateTime DayBuy
     {
+        get { return daybuy; }
+    }
+
+    public bool Insurance
+    {
+        get { return insurance; }
+    }
+
+    public List<Rating> Ratings { get { return rating; } }
+    public double RentCost()
+    {
+        double tmp = level;
         if (this.insurance)
         {
-            return basecost * level;
+            return basecost * tmp;
         }
         else
         {
-            level -= fee;
-            return basecost * level;
+            tmp -= fee;
+            return basecost * tmp;
         }
     }
 
+    public void DisplayRating()
+    {
+        Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+        Console.WriteLine("|  Person  |  Voting  |             Comment  ");
+        foreach (Rating r in rating)
+        {
+            r.DisplayRating();
+        }
+    }
     public virtual void display()
     {
 
@@ -124,8 +146,7 @@ class Vehicle
                         while (reader.Read())
                         {
                             string typeV = new string(reader["typeVehicle"].ToString().Trim());
-                            string className = Vehicle.GetType(typeV); // The class name
-                                                           // Use reflection to create an instance
+                            string className = Vehicle.GetType(typeV);
                             Type type = Type.GetType(className);
                             object instance = Activator.CreateInstance(type);
 
@@ -151,6 +172,7 @@ class Vehicle
                                 {
                                     v.isRent = isR;
                                 }
+                                Rating.ReadData("Rating", v.rating, v.idvehicle);
                                 owner.VehicleList.Add(v);
                             }
                         }
@@ -159,7 +181,6 @@ class Vehicle
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during database operations
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
             return true;
