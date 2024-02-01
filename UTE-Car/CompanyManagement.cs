@@ -427,7 +427,7 @@ class CompanyManagement
     
     public void ReadContract() 
     {
-        Contract.GetInfor(contractlist);
+        contract.GetInfor(contractlist);
     }
 
 
